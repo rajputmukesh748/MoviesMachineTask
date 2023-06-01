@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.mukesh.machinetask.common.STRING_ALIAS
 import com.mukesh.machinetask.common.safeCall
-import com.mukesh.template.databinding.HomeBinding
-import com.mukesh.template.databinding.ViewAllBinding
+import com.mukesh.machinetask.presentation.viewModel.home.HomeVM
+import com.mukesh.machinetask.databinding.HomeBinding
+import com.mukesh.machinetask.databinding.ViewAllBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +19,7 @@ class Home : Fragment() {
 
     private var _binding: HomeBinding? = null
     private val binding get() = _binding!!
+    private val viewModel by viewModels<HomeVM>()
 
 
     /**
@@ -44,7 +48,11 @@ class Home : Fragment() {
      * Set Up Ui
      * */
     private fun setUpUI() = safeCall {
+        binding.toolBar.ivBack.visibility = View.INVISIBLE
         binding.toolBar.tvHeading.text = getString(STRING_ALIAS.home)
+        binding.rvMain.adapter = viewModel.categoryAdapter.apply {
+            submitList(listOf(false, true, true, true))
+        }
     }
 
 

@@ -19,3 +19,12 @@ interface OnSingleClickListener {
 fun View.setOnSingleClickListener(onSingleClickListener: OnSingleClickListener) {
     SingleClickListenerHandler(view = this, onSingleClickListener = onSingleClickListener)
 }
+
+
+fun View.setOnSingleClickListener(callback: View.() -> Unit){
+    SingleClickListenerHandler(view = this, onSingleClickListener = object : OnSingleClickListener{
+        override fun onClick(view: View?) {
+            if (view == this@setOnSingleClickListener) callback.invoke(view)
+        }
+    })
+}

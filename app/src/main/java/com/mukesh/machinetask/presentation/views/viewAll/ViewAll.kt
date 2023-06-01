@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.mukesh.machinetask.common.ID_ALIAS
 import com.mukesh.machinetask.common.STRING_ALIAS
 import com.mukesh.machinetask.common.navigateBack
 import com.mukesh.machinetask.common.safeCall
 import com.mukesh.machinetask.common.singleClickHandler.OnSingleClickListener
 import com.mukesh.machinetask.common.singleClickHandler.setOnSingleClickListener
-import com.mukesh.template.databinding.ViewAllBinding
+import com.mukesh.machinetask.presentation.viewModel.viewAll.ViewAllVM
+import com.mukesh.machinetask.databinding.ViewAllBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +21,7 @@ class ViewAll : Fragment(), OnSingleClickListener {
 
     private var _binding: ViewAllBinding? = null
     private val binding get() = _binding!!
+    private val viewModel by viewModels<ViewAllVM>()
 
 
     /**
@@ -48,6 +51,12 @@ class ViewAll : Fragment(), OnSingleClickListener {
      * */
     private fun setUpUI() = safeCall {
         binding.toolBar.tvHeading.text = getString(STRING_ALIAS.recently_visit)
+        binding.rvFilters.adapter = viewModel.filterAdapter.apply {
+            submitList(listOf(false, false, false, false))
+        }
+        binding.rvMain.adapter = viewModel.viewAllAdapter.apply {
+            submitList(listOf(false, false, false, false))
+        }
         clickInitializer()
     }
 

@@ -2,7 +2,7 @@ package com.mukesh.machinetask.presentation.views.mainActivity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mukesh.template.databinding.ActivityMainBinding
+import com.mukesh.machinetask.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

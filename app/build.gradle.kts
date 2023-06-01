@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "com.mukesh.template"
+    namespace = "com.mukesh.machinetask"
     compileSdk = 33
 
     defaultConfig {
@@ -39,8 +39,8 @@ android {
 
         //Release App Handling
         release {
-            isMinifyEnabled  = true
-            isShrinkResources = true
+            isMinifyEnabled  = false
+            isShrinkResources = false
             isDebuggable = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
@@ -51,12 +51,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
     //This allows the Hilt annotation processors to be isolating so they are only invoked when necessary
@@ -91,9 +91,13 @@ dependencies {
     //Coroutines and LifeCycle Libraries
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
+    //Gson Convertor
+    implementation("com.google.code.gson:gson:2.10.1")
+
     //Room
     val roomVersion = "2.5.1"
-    implementation("androidx.room:room-runtime:$roomVersion")
+//    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
 
     //Testing

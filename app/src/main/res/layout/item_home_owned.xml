@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/_170sdp"
+    android:layout_height="wrap_content"
+    android:background="@color/_202020"
+    android:padding="@dimen/_8sdp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivBanner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_210sdp"
+        android:src="@drawable/dummy_image"
+        android:scaleType="centerCrop"
+        android:theme="@style/RoundCorner10"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ivTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Blues American"
+        app:layout_constraintTop_toBottomOf="@+id/ivBanner"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:includeFontPadding="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ivAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Author"
+        app:layout_constraintTop_toBottomOf="@+id/ivTitle"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:includeFontPadding="false"
+        android:textColor="@color/_B7B6B6"
+        android:textSize="@dimen/_9ssp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
