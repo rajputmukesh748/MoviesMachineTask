@@ -1,0 +1,242 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "a0141bcc9286cd82f2621a2d7f83740b",
+    "entities": [
+      {
+        "tableName": "smart",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`courses` TEXT, `description` TEXT, `id` TEXT NOT NULL, `isDrchive` INTEGER, `isDefault` INTEGER, `label` TEXT, `smart` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "courses",
+            "columnName": "courses",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "archive",
+            "columnName": "isDrchive",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "defaultValue",
+            "columnName": "isDefault",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "smart",
+            "columnName": "smart",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "user",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`courses` TEXT, `description` TEXT, `id` INTEGER NOT NULL, `isArchive` INTEGER, `isDefault` INTEGER, `label` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "courses",
+            "columnName": "courses",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isArchive",
+            "columnName": "isArchive",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isDefault",
+            "columnName": "isDefault",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "label",
+            "columnName": "label",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "courses",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`authorId` INTEGER, `cdDownloads` INTEGER, `curriculumTags` TEXT, `downloadId` INTEGER, `educator` TEXT, `id` INTEGER NOT NULL, `owned` INTEGER, `progressTracking` TEXT, `purchaseOrder` TEXT, `releaseDate` TEXT, `sale` INTEGER, `seriesTags` TEXT, `skillTags` TEXT, `status` INTEGER, `styleTags` TEXT, `title` TEXT, `videoCount` INTEGER, `watched` INTEGER, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "authorId",
+            "columnName": "authorId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "cdDownloads",
+            "columnName": "cdDownloads",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "curriculumTags",
+            "columnName": "curriculumTags",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "downloadId",
+            "columnName": "downloadId",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "educator",
+            "columnName": "educator",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "owned",
+            "columnName": "owned",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "progressTracking",
+            "columnName": "progressTracking",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "purchaseOrder",
+            "columnName": "purchaseOrder",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "releaseDate",
+            "columnName": "releaseDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sale",
+            "columnName": "sale",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "seriesTags",
+            "columnName": "seriesTags",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "skillTags",
+            "columnName": "skillTags",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "styleTags",
+            "columnName": "styleTags",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "videoCount",
+            "columnName": "videoCount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "watched",
+            "columnName": "watched",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a0141bcc9286cd82f2621a2d7f83740b')"
+    ]
+  }
+}

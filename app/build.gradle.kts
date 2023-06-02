@@ -30,11 +30,13 @@ android {
 
     buildTypes {
         //Debug App Handling
+        val imageBaseUrl = "http://d2xkd1fof6iiv9.cloudfront.net/images/courses/"
         debug {
             isMinifyEnabled  = false
             isShrinkResources = false
             isDebuggable = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", "\"$imageBaseUrl\"")
         }
 
         //Release App Handling
@@ -43,6 +45,7 @@ android {
             isShrinkResources = false
             isDebuggable = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", "\"$imageBaseUrl\"")
         }
     }
 
@@ -99,6 +102,12 @@ dependencies {
 //    implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
+
+    //Image loading with coil
+    implementation("io.coil-kt:coil:2.3.0")
+
+    //Swipe Refresh Layout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     //Testing
     testImplementation("junit:junit:4.13.2")

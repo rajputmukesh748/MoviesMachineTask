@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName
 @Entity(tableName = "courses")
 data class CoursesDto(
     val authorId: Int? = null,
-    val cdDownloads: Int? = null,
+    val cdDownloads: Double? = null,
     val curriculumTags: List<String>? = null,
     val downloadId: Int? = null,
     val educator: String? = null,
     @PrimaryKey(autoGenerate = false)
     val id: Int = -1,
     val owned: Int? = null,
-    val progressTracking: Double? = null,
+    val progressTracking: String? = null,
     val purchaseOrder: String? = null,
     val releaseDate: String? = null,
     val sale: Int? = null,

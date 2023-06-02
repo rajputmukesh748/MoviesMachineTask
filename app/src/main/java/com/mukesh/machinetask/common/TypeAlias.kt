@@ -11,3 +11,5 @@ typealias LAYOUT_ALIAS = R.layout
 typealias STRING_ALIAS = R.string
 
 typealias COLOR_ALIAS = R.color
+
+typealias DRAWABLE_ALIAS = R.drawable

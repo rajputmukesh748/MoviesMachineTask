@@ -1,8 +1,12 @@
 package com.mukesh.machinetask.common
 
+import android.widget.ImageView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
+import coil.load
 import com.google.gson.Gson
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
+import java.io.File
 
 
 /**
@@ -45,3 +49,24 @@ inline fun <reified T> String.convertStringIntoClass(): T = Gson().fromJson(this
 //        }
 //    }
 //}
+
+
+/**
+ * Load Image
+ * */
+fun ImageView.loadImage(
+    url: () -> String, errorPlaceHolder: () -> Int = { DRAWABLE_ALIAS.ic_broken_image }
+) = try {
+    val circularProgressDrawable = CircularProgressDrawable(this.context).apply {
+        strokeWidth = 5f
+        centerRadius = 30f
+        start()
+    }
+    load(if (url().startsWith("http")) url() else File(url())) {
+        placeholder(circularProgressDrawable)
+        crossfade(true)
+        error(errorPlaceHolder())
+    }
+} catch (e: Exception) {
+    e.printStackTrace()
+}

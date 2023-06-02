@@ -1,36 +1,43 @@
 package com.mukesh.machinetask.presentation.viewModel.home
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.mukesh.machinetask.common.ioThread
 import com.mukesh.machinetask.common.navigateDirection
 import com.mukesh.machinetask.common.safeCall
 import com.mukesh.machinetask.common.singleClickHandler.setOnSingleClickListener
+import com.mukesh.machinetask.data.local.CoursesDto
+import com.mukesh.machinetask.data.local.SmartDto
 import com.mukesh.machinetask.presentation.adapters.GenericAdapter
 import com.mukesh.machinetask.presentation.views.home.HomeDirections
 import com.mukesh.machinetask.databinding.ItemHomeBinding
 import com.mukesh.machinetask.databinding.ItemHomeOwnedBinding
 import com.mukesh.machinetask.databinding.ItemHomeRecentBinding
-import com.mukesh.machinetask.db.MachineTaskDb
+import com.mukesh.machinetask.domain.usecase.GetCoursesWithIdsUseCase
+import com.mukesh.machinetask.domain.usecase.getAllCategories.GetAllCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeVM @Inject constructor(
-    private val machineTaskDb: MachineTaskDb
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
+    private val getCoursesWithIdsUseCase: GetCoursesWithIdsUseCase
 ) : ViewModel() {
+
+    val allCategoriesList by lazy { ArrayList<SmartDto>() }
 
 
     /**
      * Category Adapter
      * */
-    val categoryAdapter = object : GenericAdapter<ItemHomeBinding, Boolean>(){
+    val categoryAdapter = object : GenericAdapter<ItemHomeBinding, SmartDto>(){
         override fun onCreateView(
             inflater: LayoutInflater,
             parent: ViewGroup,
@@ -39,8 +46,9 @@ class HomeVM @Inject constructor(
 
         override fun itemViewType(position: Int) = null
 
-        override fun onBindHolder(binding: ItemHomeBinding, dataClass: Boolean) {
-            binding.rvCourse.categoryCourses(dataClass)
+        override fun onBindHolder(binding: ItemHomeBinding, dataClass: SmartDto) {
+            binding.tvHeading.text = dataClass.label.orEmpty()
+            binding.rvCourse.categoryCourses(dataClass.id == "owned", dataClass.coursesList ?: emptyList())
 
             binding.tvViewAll.setOnSingleClickListener {
                 navigateDirection(HomeDirections.actionHome2ToViewAll())
@@ -54,8 +62,8 @@ class HomeVM @Inject constructor(
     /**
      * Category Courses
      * */
-    fun RecyclerView.categoryCourses(isRecentItem: Boolean = true) = safeCall {
-        val coursesAdapter = object : GenericAdapter<ViewBinding, Boolean>(){
+    fun RecyclerView.categoryCourses(isRecentItem: Boolean = true, list: List<CoursesDto>) = safeCall {
+        val coursesAdapter = object : GenericAdapter<ViewBinding, CoursesDto>(){
             override fun onCreateView(
                 inflater: LayoutInflater,
                 parent: ViewGroup,
@@ -65,28 +73,35 @@ class HomeVM @Inject constructor(
 
             override fun itemViewType(position: Int) = if (position == 0) 1 else 2
 
-            override fun onBindHolder(binding: ViewBinding, dataClass: Boolean) {
+            override fun onBindHolder(binding: ViewBinding, dataClass: CoursesDto) {
 
             }
 
         }
         adapter = coursesAdapter.apply {
-            submitList(listOf(false, false, false, false))
+            submitList(list)
         }
     }
 
 
-    init {
-        getTasks()
-    }
+    /**
+     * Get All Categories
+     * */
+    private val _categoriesData by lazy { MutableSharedFlow<List<SmartDto>?>() }
+    val categoriesData get() = _categoriesData.asSharedFlow()
+    fun getAllCategories() = getAllCategoriesUseCase().onEach { result ->
+        _categoriesData.emit(result)
+    }.launchIn(viewModelScope)
 
 
-    fun getTasks() = viewModelScope.launch {
-        ioThread {
-            machineTaskDb.smartDao().getAllSmart()?.let {
-                Log.e("dfdsfsd","fsdfsdfsd --->  $it")
-            }
-        }
-    }
+
+    /**
+     * Get All Courses With ID's
+     * */
+    private val _coursesList by lazy { MutableSharedFlow<List<CoursesDto>?>() }
+    val coursesList get() = _coursesList.asSharedFlow()
+    fun getCourses(list: List<Int>) = getCoursesWithIdsUseCase(list).onEach { result ->
+        _coursesList.emit(result)
+    }.launchIn(viewModelScope)
 
 }
