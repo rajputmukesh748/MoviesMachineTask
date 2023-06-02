@@ -2,6 +2,7 @@ package com.mukesh.machinetask.presentation.views.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -81,7 +82,10 @@ class Home : Fragment() {
         viewModel.coursesList.collectLatest {
             it?.map { course ->
                 viewModel.allCategoriesList.map { categories ->
-                    if (categories.courses?.contains(course.id) == true){
+                    //Convert string cause DB save int value in Double format
+                    // INPUT :- 15, OUTPUT:- 15.0
+                    //So i am converting into string and then int again
+                    if (categories.courses?.map { it.toString().toInt() }?.contains(course.id) == true){
                         categories.coursesList?.add(course)
                     }
                 }

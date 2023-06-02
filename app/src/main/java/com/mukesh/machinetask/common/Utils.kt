@@ -62,7 +62,7 @@ fun ImageView.loadImage(
         centerRadius = 30f
         start()
     }
-    load(if (url().startsWith("http")) url() else File(url())) {
+    load(if (url().startsWith("http")) url().plus("/169_820.jpg") else File(url())) {
         placeholder(circularProgressDrawable)
         crossfade(true)
         error(errorPlaceHolder())

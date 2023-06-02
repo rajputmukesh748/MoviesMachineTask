@@ -14,7 +14,7 @@ import com.mukesh.machinetask.db.typeConverters.StringListConverter
 
 @Database(
     entities = [SmartDto::class, UserDto::class, CoursesDto::class],
-    version = 4,
+    version = 6,
     exportSchema = true
 )
 @TypeConverters(StringListConverter::class, IntegerTypeConverter::class)

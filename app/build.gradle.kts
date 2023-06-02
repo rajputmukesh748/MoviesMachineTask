@@ -36,7 +36,7 @@ android {
             isShrinkResources = false
             isDebuggable = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "BASE_URL", "\"$imageBaseUrl\"")
+            buildConfigField("String", "IMAGE_BASE_URL", "\"$imageBaseUrl\"")
         }
 
         //Release App Handling
@@ -45,7 +45,7 @@ android {
             isShrinkResources = false
             isDebuggable = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "BASE_URL", "\"$imageBaseUrl\"")
+            buildConfigField("String", "IMAGE_BASE_URL", "\"$imageBaseUrl\"")
         }
     }
 

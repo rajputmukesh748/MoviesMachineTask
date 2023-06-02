@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.mukesh.machinetask.BuildConfig
+import com.mukesh.machinetask.common.loadImage
 import com.mukesh.machinetask.common.navigateDirection
 import com.mukesh.machinetask.common.safeCall
 import com.mukesh.machinetask.common.singleClickHandler.setOnSingleClickListener
@@ -48,7 +50,7 @@ class HomeVM @Inject constructor(
 
         override fun onBindHolder(binding: ItemHomeBinding, dataClass: SmartDto) {
             binding.tvHeading.text = dataClass.label.orEmpty()
-            binding.rvCourse.categoryCourses(dataClass.id == "owned", dataClass.coursesList ?: emptyList())
+            binding.rvCourse.categoryCourses(dataClass.id != "owned", dataClass.coursesList ?: emptyList())
 
             binding.tvViewAll.setOnSingleClickListener {
                 navigateDirection(HomeDirections.actionHome2ToViewAll())
@@ -74,13 +76,38 @@ class HomeVM @Inject constructor(
             override fun itemViewType(position: Int) = if (position == 0) 1 else 2
 
             override fun onBindHolder(binding: ViewBinding, dataClass: CoursesDto) {
-
+                if(binding is ItemHomeRecentBinding){
+                    binding.bind(dataClass = dataClass)
+                } else if(binding is ItemHomeOwnedBinding){
+                    binding.bind(dataClass = dataClass)
+                }
             }
 
         }
         adapter = coursesAdapter.apply {
             submitList(list)
         }
+    }
+
+
+
+    /**
+     * Set Up Adapter Recent Binding
+     * */
+    private fun ItemHomeRecentBinding.bind(dataClass: CoursesDto) = safeCall {
+        ivTitle.text = dataClass.title.orEmpty().ifEmpty { "N/A" }
+        ivAuthor.text = dataClass.educator.orEmpty().ifEmpty { "N/A" }
+        ivBanner.loadImage(url = { BuildConfig.IMAGE_BASE_URL.plus(dataClass.id) })
+    }
+
+
+    /**
+     * Set Up Adapter Owned Binding
+     * */
+    private fun ItemHomeOwnedBinding.bind(dataClass: CoursesDto) = safeCall {
+        ivTitle.text = dataClass.title.orEmpty().ifEmpty { "N/A" }
+        ivAuthor.text = dataClass.educator.orEmpty().ifEmpty { "N/A" }
+        ivBanner.loadImage(url = { BuildConfig.IMAGE_BASE_URL.plus(dataClass.id) })
     }
 
 
@@ -100,7 +127,7 @@ class HomeVM @Inject constructor(
      * */
     private val _coursesList by lazy { MutableSharedFlow<List<CoursesDto>?>() }
     val coursesList get() = _coursesList.asSharedFlow()
-    fun getCourses(list: List<Int>) = getCoursesWithIdsUseCase(list).onEach { result ->
+    fun getCourses(list: List<Int>) = getCoursesWithIdsUseCase(list.map { it.toString() }).onEach { result ->
         _coursesList.emit(result)
     }.launchIn(viewModelScope)
 

@@ -6,18 +6,18 @@ import com.mukesh.machinetask.db.MachineTaskDb
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.lang.Exception
 import javax.inject.Inject
 
 class GetCoursesWithIdsUseCase @Inject constructor(
     private val machineTaskDb: MachineTaskDb
 ) {
 
-    operator fun invoke(coursesId: List<Int>): Flow<List<CoursesDto>?> = flow {
+    operator fun invoke(coursesId: List<String>): Flow<List<CoursesDto>?> = flow {
         try {
-            val coursesList = machineTaskDb.coursesDto().findMultipleCourses(coursesId)
+            val coursesList =
+                machineTaskDb.coursesDto().findMultipleCourses(coursesId.map { it.toInt() })
             emit(coursesList)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }.flowOn(ioDispatcher)

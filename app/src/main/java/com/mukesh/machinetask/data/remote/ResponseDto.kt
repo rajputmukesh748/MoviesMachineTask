@@ -102,7 +102,26 @@ data class ResponseDto(
             val watched: Int? = null
         ){
             fun toCoursesDto(): CoursesDto {
-                return CoursesDto(authorId, cdDownloads?.toDouble() ?: 0.0, curriculumTags, downloadId, educator, id ?: -1, owned, progressTracking, purchaseOrder, releaseDate, sale, seriesTags, skillTags, status, styleTags, title, videoCount, watched)
+                return CoursesDto(
+                    authorId,
+                    cdDownloads?.toDouble(),
+                    curriculumTags,
+                    downloadId,
+                    educator,
+                    id ?: -1,
+                    owned,
+                    progressTracking.toString(),
+                    purchaseOrder,
+                    releaseDate,
+                    sale,
+                    seriesTags,
+                    skillTags,
+                    status,
+                    styleTags,
+                    title,
+                    videoCount,
+                    watched
+                )
             }
         }
     }
